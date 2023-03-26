@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classes from "./IdentifierInput.module.css";
 
 
-interface IProps {validator : (arg0 : string) => boolean,ref : React.Ref<HTMLInputElement>}
+interface IProps {validator : (arg0 : string) => boolean}
 
 const IdentifierInput: React.FC<IProps> = (props) => {
     const valildateIdentifier = props.validator;
@@ -25,11 +25,11 @@ const IdentifierInput: React.FC<IProps> = (props) => {
         Username or Gmail :
       </label>
       <input
+        id="identifierInput"
         type="text"
         name="identifier"
-        ref={props.ref}
-        onChange={(e) => handleValidity(e)}
-        // if changes to onBlur use(uncomment) activeElement.Blur mechanism codede in login form
+        onBlur={(e) => handleValidity(e)}
+        // if changes to onBlur use(uncomment) activeElement.Blur mechanism codede in login form vise versa if cahged to onChange
         className={`${classes.identifierInput} ${classes.txtInput}`}
       />
       {valid === false && (

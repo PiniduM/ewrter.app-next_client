@@ -31,7 +31,7 @@ const PasswordInput: React.FC<IProps> = (props) => {
       type="password"
       name="password"
       autoComplete="on" //reacts request
-      onChange={(e) => handleValidity(e)}
+      onBlur={(e) => handleValidity(e)}
       className={`${classes.pwdInput} ${classes.txtInput}`}
     />
     {valid === false && (

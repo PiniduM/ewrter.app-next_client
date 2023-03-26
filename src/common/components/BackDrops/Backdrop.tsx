@@ -1,6 +1,11 @@
+import React from "react";
 import classes from "./Backdrop.module.css"
 
-const Backdrop = (props) => {
+interface IProps {
+    children: React.ReactNode
+}
+
+const Backdrop = (props: IProps) => {
     return (
         <div className={classes.backdrop} >
             {props.children}

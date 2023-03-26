@@ -1,29 +1,34 @@
-import axIServerMain from "../../controllers/axIServerMain";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 import Cookies from "js-cookie";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import FormSubmitLoader from "../../../../components/Loaders/FormSubmitLoader";
+
+import axIServerMain from "../../controllers/axIServerMain";
+import FormSubmitLoader from "@/common/components/Loaders/FormSubmitLoader";
 
 import classes from "./GmailVerifier.module.css";
 
-const GmailVerifier = (props) => {
+interface IProps {
+  gmail: string;
+}
+
+const GmailVerifier = (props: IProps) => {
   const [displayLoader, setDisplayLoader] = useState(false);
 
   const gmail = props.gmail;
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [verificationCode, setVerificationCode] = useState("");
   const [displayWarning, setDisplayWarning] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVerificationCode(e.target.value);
   };
 
   //const handleResend = () => {}; v2
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const submitBtn = document.getElementById("submitBtn");
+    const submitBtn = document.getElementById("submitBtn") as HTMLButtonElement;
     submitBtn.disabled = true;
 
     const sixDigitRegex = /^\d{6}$/;
@@ -36,20 +41,29 @@ const GmailVerifier = (props) => {
 
     const path = `/auth/verifygmail`;
     const config = {
-      headers:{"Content-Legth": "67"}
-    }
+      headers: { "Content-Legth": "67" },
+    };
     axIServerMain
-      .post(path, {
-        gmail,
-        verificationCode,
-      },config)
+      .post(
+        path,
+        {
+          gmail,
+          verificationCode,
+        },
+        config
+      )
       .then(() => {
         Cookies.remove("verifying_gmail");
-        navigate("/authentication/login",{state: {identifier: gmail,newCommer: true}});
+        router.push({
+          pathname: "/authentication/login",
+          query: { identifier: gmail, newCommer: true },
+        });
       })
       .catch((err) => {
-        if(err?.response?.data === "not_matching") {setDisplayWarning(true)} // inform that verification code is not matching(incorrect)
-        else navigate("/unexpected_error");
+        if (err?.response?.data === "not_matching") {
+          setDisplayWarning(true);
+        } // inform that verification code is not matching(incorrect)
+        else router.push("/unexpected_error");
       })
       .finally(() => {
         setDisplayLoader(false);
@@ -71,7 +85,7 @@ const GmailVerifier = (props) => {
       <form className={classes.form} onSubmit={(e) => handleSubmit(e)}>
         <input
           type="text"
-          maxLength="6"
+          maxLength={6}
           value={verificationCode}
           placeholder="code"
           className={classes.otpInput}
@@ -82,12 +96,14 @@ const GmailVerifier = (props) => {
         ) : (
           <p className={classes.noWarning}>valid verification code</p>
         )}
-        <button className={classes.verifyButton} id="submitBtn">Verify</button>
+        <button className={classes.verifyButton} id="submitBtn">
+          Verify
+        </button>
         {/* <p className={classes.resendLink} onClick={handleResend}>
           Resend a verification code
         </p>  v2*/}
       </form>
-      {displayLoader && <FormSubmitLoader message="Verifying..."/>}
+      {displayLoader && <FormSubmitLoader message="Verifying..." />}
     </div>
   );
 };

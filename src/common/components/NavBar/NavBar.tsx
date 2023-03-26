@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext ,useEffect,useState} from "react";
 import AuthContext from "@/controllers/AuthContext";
 
 import Link from "next/link";
@@ -7,7 +7,13 @@ import Hamburger from "./Hamburger";
 import classes from "./NavBar.module.css";
 
 const NavBar: React.FC = () => {
-  let loggedIn = useContext(AuthContext).loginToken.get;
+  
+  const loginToken = useContext(AuthContext).loginToken.get;
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  useEffect(() => {
+    if (loginToken) setLoggedIn(true);
+  }, [loginToken]);
+  //important see Header.js for more details
 
   return (
     <div className={classes.navBar}>

@@ -1,50 +1,52 @@
-import axIServerMain from "../../controllers/axIServerMain.js";
-import { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import Link from "next/link.js";
+import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
-import FormBase from "../../components/FormBase.js";
-import FormSubmitLoader from "../../../../components/Loaders/FormSubmitLoader.js";
+import axIServerMain from "../../controllers/axIServerMain";
+import FormBase from "../../components/FormBase";
+import FormSubmitLoader from "@/common/components/Loaders/FormSubmitLoader";
+import DupGmailPopUp from "./components/DupGmailPopUp";
 
 import classes from "./RegisterForm.module.css";
-import DupGmailPopUp from "./components/DupGmailPopUp.js";
 
+// break into components and implement onChange if necessary
 const RegisterForm = () => {
   const [displayLoader, setDisplayLoader] = useState(false);
-  const [duplicateGmail, setDuplicateGmail] = useState(undefined);
-  const [duplicateUsername, setDuplicateUsername] = useState(undefined);
+  const [duplicateGmail, setDuplicateGmail] = useState(false);
+  const [duplicateUsername, setDuplicateUsername] = useState(false);
 
-  const uNameRef = useRef();
-  const gmailRef = useRef();
-  const pwdRef = useRef();
-  const confirmPwdRef = useRef();
+  const uNameRef = useRef<HTMLInputElement>(null);
+  const gmailRef = useRef<HTMLInputElement>(null);
+  const pwdRef = useRef<HTMLInputElement>(null);
+  const confirmPwdRef = useRef<HTMLInputElement>(null);
 
-  const [validUname, setValidUname] = useState(undefined);
-  const [validgmail, setValidgmail] = useState(undefined);
-  const [validPwd, setValidPwd] = useState(undefined);
-  const [pwdConfirmed, setPwdConfirmed] = useState(undefined);
+  const [validUname, setValidUname] = useState<undefined | boolean>(undefined);
+  const [validgmail, setValidgmail] = useState<undefined | boolean>(undefined);
+  const [validPwd, setValidPwd] = useState<undefined | boolean>(undefined);
+  const [pwdConfirmed, setPwdConfirmed] = useState<undefined | boolean>(undefined);
 
-  const navigate = useNavigate();
+  const router = useRouter();
 
-  const validateUsername = (username) => {
+  const validateUsername = (username: string) => {
     const usernameRegex = /^(?=.*\d)(?=.*[a-z])[a-zA-Z\d]{6,20}$/;
     return usernameRegex.test(username);
   };
-  const validateGmail = (gmail) => {
+  const validateGmail = (gmail: string) => {
     //const emailRegex = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@(gmail|googlemail)\.com$/i;
     return gmailRegex.test(gmail);
   };
-  const validatePassword = (password) => {
+  const validatePassword = (password: string) => {
     const pwdRegex = /^(?=.*[a-z])(?=.*\d)[A-Za-z\d]{6,25}$/;
     return pwdRegex.test(password);
   };
-  const validateConfirmission = (password, confirmPassword) => {
+  const validateConfirmission = (password: string, confirmPassword: string) => {
     return password === confirmPassword;
   };
 
   const handleUsername = () => {
-    if (validateUsername(uNameRef.current.value)) {
+    if (uNameRef.current !== null && validateUsername(uNameRef.current.value)) {
       setValidUname(true);
     } else {
       setValidUname(false);
@@ -52,7 +54,7 @@ const RegisterForm = () => {
   };
 
   const handlegmail = () => {
-    if (validateGmail(gmailRef.current.value)) {
+    if (gmailRef.current !== null && validateGmail(gmailRef.current.value)) {
       setValidgmail(true);
     } else {
       setValidgmail(false);
@@ -60,7 +62,7 @@ const RegisterForm = () => {
   };
 
   const handlePwd = () => {
-    if (validatePassword(pwdRef.current.value)) {
+    if (pwdRef.current !== null && validatePassword(pwdRef.current.value)) {
       setValidPwd(true);
     } else {
       setValidPwd(false);
@@ -70,6 +72,8 @@ const RegisterForm = () => {
 
   const handleConfirmPwd = () => {
     if (
+      pwdRef.current !== null &&
+      confirmPwdRef.current !== null &&
       validateConfirmission(pwdRef.current.value, confirmPwdRef.current.value)
     ) {
       setPwdConfirmed(true);
@@ -78,34 +82,40 @@ const RegisterForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    document.activeElement.blur();
-    const submitBtn = document.getElementById("submitBtn");
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    (document.activeElement as HTMLElement).blur();
+    const submitBtn = document.getElementById("submitBtn") as HTMLButtonElement;
     submitBtn.disabled = true;
     e.preventDefault();
     setDuplicateUsername(false);
 
-    const gmail = gmailRef.current.value;
-    const username = uNameRef.current.value;
-    const password = pwdRef.current.value;
-    const confirmPassword = confirmPwdRef.current.value;
+    const form = e.target as typeof e.target & {
+      gmail: { value: string };
+      username: { value: string };
+      password: { value: string };
+      confirmPassword: { value: string };
+    };
+    const gmail = form.gmail.value;
+    const username = form.username.value;
+    const password = form.password.value;
+    const confirmPassword = form.confirmPassword.value;
     if (
       !(
         validateUsername(username) &&
         validateGmail(gmail) &&
         validatePassword(password) &&
-        validateConfirmission(password,confirmPassword)
-        )
-        ) {
-          submitBtn.disabled = false;
-          return;
-        }
-        setDisplayLoader(true);
-        
-        const user = {
-          gmail,
-          username,
-          password,
+        validateConfirmission(password, confirmPassword)
+      )
+    ) {
+      submitBtn.disabled = false;
+      return;
+    }
+    setDisplayLoader(true);
+
+    const user = {
+      gmail,
+      username,
+      password,
     };
     const path = `/auth/register`;
 
@@ -115,7 +125,7 @@ const RegisterForm = () => {
         if (result.data.gmail) {
           const expires = new Date(Date.now() + 10 * 60 * 1000);
           Cookies.set("verifying_gmail", result.data.gmail, { expires });
-          navigate("/authentication/verifygmail");
+          router.push("/authentication/verifygmail");
         } else {
           alert(`Sorry something went wrong please try again,
           contact developers through ewriterinfo@gmail.com if needed`);
@@ -128,7 +138,7 @@ const RegisterForm = () => {
           //setTimeout(() => setDuplicateUsername(false),5000)
         } else if (err.response?.data === "duplicate_gmail") {
           setDuplicateGmail(true);
-        } else navigate("/unexpected_error/");
+        } else router.push("/unexpected_error/");
       })
       .finally(() => {
         setDisplayLoader(false);
@@ -156,7 +166,6 @@ const RegisterForm = () => {
           </label>
           <input
             type="text"
-            id="username"
             name="username"
             required
             ref={uNameRef}
@@ -186,7 +195,6 @@ const RegisterForm = () => {
           </label>
           <input
             type="text"
-            id="gmail"
             name="gmail"
             required
             ref={gmailRef}
@@ -212,8 +220,7 @@ const RegisterForm = () => {
           </label>
           <input
             type="password"
-            id="pwd"
-            name="pwd"
+            name="password"
             required
             autoComplete="off"
             ref={pwdRef}
@@ -240,8 +247,7 @@ const RegisterForm = () => {
           </label>
           <input
             type="password"
-            id="confirmPwd"
-            name="confirmPwd"
+            name="confirmPassword"
             required
             autoComplete="on" // reacts request
             ref={confirmPwdRef}
@@ -260,14 +266,15 @@ const RegisterForm = () => {
             className={classes.submitBtn}
           />
           <p>
-            Already have a account? <Link to="/authentication/login">login</Link>
+            Already have a account?{" "}
+            <Link href="/authentication/login">login</Link>
           </p>
         </div>
       </form>
       {displayLoader && <FormSubmitLoader message={"Loading..."} />}
       {duplicateGmail && (
         <DupGmailPopUp
-          gmail={gmailRef.current.value}
+          gmail={gmailRef.current?.value || ""}
           toggler={setDuplicateGmail}
         />
       )}

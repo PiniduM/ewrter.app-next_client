@@ -1,13 +1,20 @@
 import MiniNavBar from "../NavBar/MiniNavBar";
 import Link from "next/link";
-import React, { useContext } from "react";
+import Image from "next/image";
+import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "@/controllers/AuthContext";
 
 import classes from "./MiniHeader.module.css";
+import eWriterLogo from "@/assets/logos/eWriterLogo.png";
+import profileIcon from "@/assets/icons/profileIcon.png";
 
 const MiniHeader: React.FC = () => {
-  const loggedIn = useContext(AuthContext).loginToken.get ? true : false;
-
+  const loginToken = useContext(AuthContext).loginToken.get;
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  useEffect(() => {
+    if (loginToken) setLoggedIn(true);
+  }, [loginToken]);
+  //compulsary see Header.js for more details
   const toggleLinks = () => {
     const profileLinks = document.getElementById("profileLinks");
     profileLinks?.classList.toggle(classes.active);
@@ -17,8 +24,8 @@ const MiniHeader: React.FC = () => {
     <div className={classes.header}>
       <Link href="/">
         <div className={classes.logo}>
-          <img
-            src="/assets/eWriterLogo1Black.png"
+          <Image
+            src={eWriterLogo}
             alt="eWriter logo"
             className={classes.logo}
           />
@@ -30,10 +37,15 @@ const MiniHeader: React.FC = () => {
       </nav>
       {loggedIn && (
         <div className={classes.profileIcon} onClick={toggleLinks}>
-          <img
+          {/* <img
             className={classes.profileIconImg}
             src="/resources/accountIcon.png"
             alt="profile"
+          /> */}
+          <Image
+            src={profileIcon}
+            alt="profile"
+            className={classes.profileIconImg}
           />
           <div id="profileLinks" className={classes.profileLinks}>
             <div className={classes.profileLink}>

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router.js";
 import Link from "next/link.js";
 import Cookies from "js-cookie";
@@ -15,7 +15,6 @@ import classes from "./LoginForm.module.css";
 const LoginForm = () => {
   const router = useRouter();
 
-  const identifierRef = useRef<HTMLInputElement>(null);
 
   const [displayLoader, setDisplayLoader] = useState(false);
   const [incorrectWarning, setIncorrectWarning] = useState(false);
@@ -24,7 +23,6 @@ const LoginForm = () => {
   const setProfileCreated = useContext(AuthContext).profileCreated.set;
 
   const data = router.query;
-  const identifier = data.identifier;
   const newCommer = data.newCommer;
 
   const usernameRegex = /^(?=.*\d)(?=.*[a-z])[a-zA-Z\d]{6,20}$/;
@@ -37,22 +35,24 @@ const LoginForm = () => {
     return pwdRegex.test(password);
   };
 
-
-  const handleSubmit = async (e : React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //(document.activeElement as HTMLElement)?.blur();
+    (document.activeElement as HTMLElement)?.blur();
     // use above mechanism if validation is done on blur
     const submitBtn = document.getElementById("submitBtn") as HTMLButtonElement;
     submitBtn.disabled = true;
 
-    const form = e.target;
+    const form = e.target as typeof e.target & {
+      identifier: { value: string };
+      password: { value: string };
+    };
     const identifier = form.identifier.value;
     const password = form.password.value;
 
-     if (!(valildateIdentifier(identifier) && validatePassword(password))) {
-       submitBtn.disabled = false;
-       return;
-     }
+    if (!(valildateIdentifier(identifier) && validatePassword(password))) {
+      submitBtn.disabled = false;
+      return;
+    }
 
     setDisplayLoader(true);
     const user = {
@@ -63,7 +63,7 @@ const LoginForm = () => {
     axIServerMain
       .post(path, user)
       .then((response) => {
-        if (response.data.username) {
+        if (response.data?.username) {
           const token = response.data.token;
           const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
           Cookies.set("ewriter_login_token", token, { expires });
@@ -75,9 +75,10 @@ const LoginForm = () => {
             router.push("/user/create_profile");
           }
         } else if (response.data?.gmail) {
+          const gmail = response.data.gmail;
           const expires = new Date(Date.now() + 10 * 60 * 1000);
-          Cookies.set("verifying_gmail", response.data.gmail, { expires });
-          router.push("/authentication/verifygmail");
+          Cookies.set("verifying_gmail", gmail, { expires });
+          router.push({pathname: "/authentication/verifygmail",query: {gmail}});
         } else {
           alert(`something went wrong please try again,
           contact developers through ewriterinfo@gmail.com if needed`);
@@ -96,17 +97,30 @@ const LoginForm = () => {
       });
   };
 
+  useEffect(() => {
+    if (data.identifier) {
+      const identifier = data.identifier as string;
+      const identifierInput = document.getElementById(
+        "identifierInput"
+      ) as HTMLInputElement;
+      if (identifierInput) {
+        identifierInput.value = identifier;
+        identifierInput.dispatchEvent(new Event("change"));
+      }
+    }
+  }, [data]);
+
   return (
     <FormBase>
       <form className={classes.form} onSubmit={handleSubmit}>
         <h1 className={classes.topic}>Login</h1>
-        <IdentifierInput  validator={valildateIdentifier} ref={identifierRef}/>
-        <PasswordInput validator={validatePassword}/>
+        <IdentifierInput validator={valildateIdentifier} />
+        <PasswordInput validator={validatePassword} />
         {incorrectWarning && (
-            <p className={classes.incorrectWarning}>
-              Incorrect username or password
-            </p>
-          )}
+          <p className={classes.incorrectWarning}>
+            Incorrect username or password
+          </p>
+        )}
         <div className={classes.submitRow}>
           <input
             type="submit"

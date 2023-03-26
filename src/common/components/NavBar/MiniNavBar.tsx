@@ -1,12 +1,17 @@
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext,useEffect,useState } from "react";
 
 import AuthContext from "@/controllers/AuthContext";
 
 import classes from "./MiniNavBar.module.css";
 
 const MiniNavBar: React.FunctionComponent = () => {
-  const loggedIn = useContext(AuthContext);
+  const loginToken = useContext(AuthContext).loginToken.get;
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  useEffect(() => {
+    if (loginToken) setLoggedIn(true);
+  }, [loginToken]);
+  //important see Header.js for more details
 
   return (
     <ul id="navMenu" className={classes.navList}>

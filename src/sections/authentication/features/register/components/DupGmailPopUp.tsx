@@ -1,8 +1,13 @@
 import Link from "next/link";
-import Backdrop from "../../../../../components/BackDrops/Backdrop";
+import Backdrop from "@/common/components/BackDrops/Backdrop";
 import classes from "./DupGmailPopUp.module.css";
 
-const DupGmailPopUp = (props) => {
+interface IProps {
+  toggler: (arg0: boolean) => void;
+  gmail: string;
+}
+
+const DupGmailPopUp = (props: IProps) => {
   const toggler = props.toggler;
 
   return (
@@ -16,7 +21,12 @@ const DupGmailPopUp = (props) => {
           >
             cancel
           </button>
-          <Link to="/authentication/login" state={{identifier: props.gmail}}>
+          <Link
+            href={{
+              pathname: "/authentication/login",
+              query: { identifier: props.gmail },
+            }}
+          >
             <button className={`${classes.btn} ${classes.login_btn}`}>
               login
             </button>
