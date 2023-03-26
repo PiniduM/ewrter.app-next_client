@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
@@ -14,7 +14,7 @@ interface IProps {
 const GmailVerifier = (props: IProps) => {
   const [displayLoader, setDisplayLoader] = useState(false);
 
-  const gmail = props.gmail;
+  const[gmail,setGmail] = useState("");
   const router = useRouter();
 
   const [verificationCode, setVerificationCode] = useState("");
@@ -72,6 +72,7 @@ const GmailVerifier = (props: IProps) => {
         }, 1000);
       });
   };
+  useEffect(() => setGmail(props.gmail),[props]) // to manage the missmatch metween SSR CSR
 
   return (
     <div className={classes.container}>

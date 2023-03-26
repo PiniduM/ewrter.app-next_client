@@ -125,7 +125,7 @@ const RegisterForm = () => {
         if (result.data.gmail) {
           const expires = new Date(Date.now() + 10 * 60 * 1000);
           Cookies.set("verifying_gmail", result.data.gmail, { expires });
-          router.push("/authentication/verifygmail");
+          router.push("/authentication/verify_gmail");
         } else {
           alert(`Sorry something went wrong please try again,
           contact developers through ewriterinfo@gmail.com if needed`);

@@ -78,7 +78,7 @@ const LoginForm = () => {
           const gmail = response.data.gmail;
           const expires = new Date(Date.now() + 10 * 60 * 1000);
           Cookies.set("verifying_gmail", gmail, { expires });
-          router.push({pathname: "/authentication/verifygmail",query: {gmail}});
+          router.push({pathname: "/authentication/verify_gmail",query: {gmail}});
         } else {
           alert(`something went wrong please try again,
           contact developers through ewriterinfo@gmail.com if needed`);
