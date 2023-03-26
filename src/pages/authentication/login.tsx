@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import AuthContext from "@/controllers/AuthContext";
 import LoginForm from "@/sections/authentication/features/login/LoginForm";
-import Layout from "@/common/layouts/EWriterBasic";
+import Layout from "@/common/layouts/Layout1H";
 
 const LoginPage = () => {
   const router = useRouter();

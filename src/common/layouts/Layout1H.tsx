@@ -1,6 +1,11 @@
+import React from "react";
 import Header from "@/common/components/Headers/Header"
 
-const EWriterBasicLayout = (props) => {
+interface IProps {
+    children: React.ReactNode
+}
+
+const EWriterBasicLayout = (props: IProps) => {
     return (
         <>
         <Header />

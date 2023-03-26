@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Imprima&family=Roboto:wght@300&display=swap');
+
+.purpleTxt {
+    color: #524FD5;
+}
+
+
+.contentImg {
+   max-width: 15rem;
+   display: block;
+   margin: auto;
+   margin-bottom: 1rem;
+}
+
+.intro {
+    font-size: 1.7rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.description {
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.btn {
+    display: block;
+    margin: auto;
+}
+
+.IntroBlock {
+    background-color: #FFF5F1;
+    font-family: 'Roboto', sans-serif;
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+}

@@ -1,5 +1,5 @@
 import RegisterForm from "@/sections/authentication/features/register/RegisterForm";
-import Layout from "@/common/layouts/EWriterBasic";
+import Layout from "@/common/layouts/Layout1H";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import AuthContext from "@/controllers/AuthContext";

@@ -9,7 +9,7 @@
 
 img.logo {
   width: 6rem;
-  height: 5rem;
+  height: auto;
   margin: 0rem 0.5rem 0rem 1rem;
   cursor: pointer;
 }

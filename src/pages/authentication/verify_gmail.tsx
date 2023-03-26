@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
-import Layout from "@/common/layouts/EWriterBasic";
+import Layout from "@/common/layouts/Layout1H";
 import GmailVerifier from "@/sections/authentication/features/verifyGmail/GmailVerifier";
 
 const VerifyGmailPage = () => {

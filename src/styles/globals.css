@@ -35,6 +35,11 @@ html {
 
 /* common styles ......................... */
 
+img {
+  height: auto;
+}
+/* must be declared when using Image component from nextjs */
+
 table,
 tr,
 td {
