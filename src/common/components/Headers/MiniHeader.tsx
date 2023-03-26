@@ -1,7 +1,7 @@
 import MiniNavBar from "../NavBar/MiniNavBar";
 import Link from "next/link";
 import React, { useContext } from "react";
-import AuthContext from "@/base/AuthContext";
+import AuthContext from "@/controllers/AuthContext";
 
 import classes from "./MiniHeader.module.css";
 

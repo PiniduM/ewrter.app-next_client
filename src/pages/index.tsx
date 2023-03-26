@@ -1,11 +1,10 @@
-import React from "react";
 import Head from "next/head";
 
 import Header from "@/common/components/Headers/Header";
 import Home from "@/sections/home/Home";
 import Footer from "@/common/components/Footers/Footer";
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   return (
     <>
       <Head>

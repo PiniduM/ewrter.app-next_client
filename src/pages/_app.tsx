@@ -1,4 +1,4 @@
-import { AuthContextProvider } from "@/base/AuthContext";
+import { AuthContextProvider } from "@/controllers/AuthContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 

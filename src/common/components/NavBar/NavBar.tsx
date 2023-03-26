@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import AuthContext from "@/base/AuthContext";
+import AuthContext from "@/controllers/AuthContext";
 
 import Link from "next/link";
 import Hamburger from "./Hamburger";
