@@ -1,7 +1,7 @@
 import { useState } from "react";
 import classes from "./TopicInput.module.css";
 
-const TopicInput = (props) => {
+const TopicInput = () => {
 
   const [topic,setTopic] = useState("");
 
@@ -12,7 +12,7 @@ const TopicInput = (props) => {
           type="text"
           name="topic"
           value={topic}
-          maxLength="30"
+          maxLength={30}
           placeholder="Your Topic..."
           onChange={e => setTopic(e.target.value)}
           required

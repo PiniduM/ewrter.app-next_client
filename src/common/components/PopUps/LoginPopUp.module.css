@@ -1,0 +1,22 @@
+.login_popup {
+    min-width: 20rem;
+    padding: 1rem 0rem;
+    border-radius: 1rem;
+    align-self: center;
+    justify-self: center;
+    background-color: #FFF5F1;
+}
+.action_btn_row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.request {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.btn {
+    min-height: 2rem;
+    width: 7rem;
+  }

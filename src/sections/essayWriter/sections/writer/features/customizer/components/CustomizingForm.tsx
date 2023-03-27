@@ -1,16 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router.js";
 import Cookies from "js-cookie";
+
+import axIEssaywriter_api from "../../../../../controllers/axIServerMain";
 import AuthContext from "@/controllers/AuthContext";
 import WriterContext from "../../../WriterContext";
 import getProfileData from "@/sections/user/features/profile/functions/getProfileData";
+import TopicInput from "./inputs/TopicInput";
+import WordCountInput from "./inputs/WordsCountInput";
+import EssayTypeInput from "./inputs/EssayTypeInput";
 
-import classes from "./DetailCollectingForm.module.css";
-import TopicInput from "./inputs/TopicInput.js";
-import WordCountInput from "./inputs/WordsCountInput.js";
-import EssayTypeInput from "./inputs/EssayTypeInput.js";
-import { useRouter } from "next/router.js";
-import axIEssaywriter_api from "../../../../../controllers/axIServerMain.js";
-
+import classes from "./CustomizingForm.module.css";
 interface IProfileData {
   fullName: string;
   age: string;
@@ -91,7 +91,7 @@ const DetailCollectingForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className={classes.form}>
-      <TopicInput condition={true} />
+      <TopicInput />
       <WordCountInput />
       <EssayTypeInput />
       <div className={classes.writeButtonContainer}>

@@ -10,19 +10,17 @@ import classes from "./Displayer.module.css";
 
 interface IProps {
   writing: {
-    topic: string
-    content: string | undefined
-  }
+    topic: string;
+    content: string | undefined;
+  };
 }
 
 const Displayer = (props: IProps) => {
-
-
-  const router = useRouter()
+  const router = useRouter();
 
   const [displaySaveWindow, setDisplaySaveWindow] = useState(false);
 
-  const writing = props.writing
+  const writing = props.writing;
   const topic = writing.topic;
   const content = writing.content;
 
@@ -40,18 +38,16 @@ const Displayer = (props: IProps) => {
             {content}
           </div>
           <div className={classes.resultOptions}>
-              <button
-                className={`defaultBtn ${classes.deleteBtn}`}
-                onClick={deleteResult}
-              >
-                Delete
-              </button>
-            <Link href={{pathname: "service/editor",query: writing}}>
-              <button className={`defaultBtn ${classes.editBtn}`}>
-                Edit
-              </button>
+            <button
+              className={`defaultBtn ${classes.deleteBtn}`}
+              onClick={deleteResult}
+            >
+              Delete
+            </button>
+            <Link href={{ pathname: "service/editor", query: writing }}>
+              <button className={`defaultBtn ${classes.editBtn}`}>Edit</button>
             </Link>
-        {/*
+            {/*
             <Link to="/service/download" state={{ topic, content }}>
               <button className={`${classes.actionBtn} ${classes.downloadBtn}`}>
                 Download
@@ -59,7 +55,7 @@ const Displayer = (props: IProps) => {
             </Link> v2
       */}
             <button
-               className={`defaultBtn ${classes.saveBtn}`}
+              className={`defaultBtn ${classes.saveBtn}`}
               // className={`${classes.actionBtn} ${classes.saveBtn}`}
               onClick={() => setDisplaySaveWindow(true)}
             >
@@ -68,7 +64,12 @@ const Displayer = (props: IProps) => {
           </div>
           {displaySaveWindow && (
             <SaveWindow
-              writing={writing}
+              writing={
+                writing as {
+                  topic: string;
+                  content: string; //content must be a string(truthy) to display save option
+                }
+              }
               toggler={setDisplaySaveWindow}
             />
           )}

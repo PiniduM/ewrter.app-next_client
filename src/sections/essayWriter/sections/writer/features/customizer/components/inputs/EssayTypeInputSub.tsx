@@ -1,11 +1,16 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../../../../../../../AuthContext";
+import Link from "next/link";
 
+import AuthContext from "@/controllers/AuthContext";
 import ComplexityInput from "./ComplexityInput";
 
 import classes from "./EssayTypeInputSub.module.css";
-const EssayTypeInputSub = (props) => {
+
+interface IProps{
+  type : string
+}
+
+const EssayTypeInputSub = (props: IProps) => {
   const type = props.type;
   const loginToken = useContext(AuthContext).loginToken.get;
   const profileCreated = useContext(AuthContext).profileCreated.get;
@@ -14,7 +19,7 @@ const EssayTypeInputSub = (props) => {
       return (
         <p className={classes.advice_para}>
           Please{" "}
-          <Link to="/authentication/login">
+          <Link href="/authentication/login">
             <span className="underline">log in</span>
           </Link>{" "}
           to use this service
@@ -24,7 +29,7 @@ const EssayTypeInputSub = (props) => {
       return (
         <p className={classes.advice_para}>
           you haven't created a profile yet. please{" "}
-          <Link to="/user/create_profile">
+          <Link href="/user/create_profile">
             <span className="underline">create a profile</span>
           </Link>{" "}
           to use this service
@@ -34,7 +39,7 @@ const EssayTypeInputSub = (props) => {
       return (
         <p className={classes.advice_para}>
           Your essay will be personalized according to your{" "}
-          <Link to="/user/profile">
+          <Link href="/user/profile">
             <span className="underline">profile details</span>
           </Link>
         </p>
