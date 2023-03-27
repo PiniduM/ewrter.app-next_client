@@ -1,34 +1,37 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import classes from "./Editor.module.css";
-import SaveWindow from "../../saver/saveWindow/SaveWindow.js";
-
-import FormSubmitLoader from "../../../../components/Loaders/FormSubmitLoader.js";
+import SaveWindow from "../saver/saveWindow/SaveWindow.jsx";
+import FormSubmitLoader from "@/common/components/Loaders/FormSubmitLoader";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
-const Editor = (props) => {
+interface IProps {
+  data: { topic: string; content: string };
+}
+
+const Editor = (props: IProps) => {
   const data = props.data;
   const topic = data.topic;
   const content = data.content;
 
-  const navigate = useNavigate();
+  const router = useRouter();
   const [displaySaveWindow, setDisplaySaveWindow] = useState(false);
 
   const getEditedTopic = () => {
-    return document.getElementById("topic").innerText;
+    return document.getElementById("topic")?.innerText as string;
   };
   const getEditedContent = () => {
-    return document.getElementById("content").innerText;
+    return document.getElementById("content")?.innerText as string;
   };
 
   const handleCancel = async () => {
-    navigate(-1);
+    router.back();
   };
   const handleSave = () => {
     const topic = getEditedTopic();
     const content = getEditedContent();
     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-    Cookies.set("edit", JSON.stringify({ topic, content }),{expires});
+    Cookies.set("edit", JSON.stringify({ topic, content }), { expires });
     setDisplaySaveWindow(true);
   };
   //v2 editor page with nav to writers

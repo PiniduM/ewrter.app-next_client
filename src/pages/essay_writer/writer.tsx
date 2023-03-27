@@ -1,7 +1,8 @@
 import Head from "next/head";
 
-import Layout from "@/common/layouts/Layout2Mh";
+import Layout from "@/common/layouts/EssayWriterLayout";
 import Writer from "@/sections/essayWriter/sections/writer/Writer";
+import { WriterContextProvider } from "@/sections/essayWriter/sections/writer/WriterContext";
 
 const EssayWriterHomePage = () => {
   return (
@@ -14,7 +15,9 @@ const EssayWriterHomePage = () => {
         />
       </Head>
       <Layout>
-        <Writer />
+        <WriterContextProvider>
+          <Writer />
+        </WriterContextProvider>
       </Layout>
     </>
   );

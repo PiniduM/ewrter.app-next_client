@@ -1,6 +1,19 @@
 import classes from "./SelectableSlot.module.css";
 
-const SelectableSlot = (props) => {
+
+interface ISelectableSlot {
+  oldSlotId: string | undefined;
+  currentSlotId: string | undefined;
+}
+
+interface IProps {
+  slotId : string;
+  content : string;
+  setter: React.Dispatch<React.SetStateAction<ISelectableSlot>>;
+}
+
+
+const SelectableSlot = (props: IProps) => {
   const slotId = props.slotId;
   const content = props.content;
   const setSelectedSlot = props.setter;

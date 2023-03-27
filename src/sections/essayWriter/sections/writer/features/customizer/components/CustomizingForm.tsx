@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router.js";
 import Cookies from "js-cookie";
 
-import axIEssaywriter_api from "../../../../../controllers/axIServerMain";
+import axIEssaywriter_api from "../../../../../controllers/axIEssaywriter_api";
 import AuthContext from "@/controllers/AuthContext";
 import WriterContext from "../../../WriterContext";
 import getProfileData from "@/sections/user/features/profile/functions/getProfileData";
@@ -95,7 +95,7 @@ const DetailCollectingForm = () => {
       <WordCountInput />
       <EssayTypeInput />
       <div className={classes.writeButtonContainer}>
-        <button type="submit" className={classes.writeButton}>
+        <button type="submit" className="defaultBtn">
           write
         </button>
       </div>

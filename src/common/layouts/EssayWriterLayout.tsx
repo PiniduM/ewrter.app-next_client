@@ -1,17 +1,19 @@
 import React from "react";
 import MiniHeader from "@/common/components/Headers/MiniHeader"
+import EssayWriterHeading from "@/sections/essayWriter/components/Headings/EssayWriterHeading";
 
 interface IProps {
     children: React.ReactNode
 }
 
-const Layout2Mh = (props: IProps) => {
+const EssayWriterLayout = (props: IProps) => {
     return (
         <>
         <MiniHeader />
+        <EssayWriterHeading />
         {props.children}
         </>
     )
 }
 
-export default Layout2Mh;
+export default EssayWriterLayout;

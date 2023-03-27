@@ -1,17 +1,26 @@
-import { useContext } from "react";
-import { AuthContext } from "../../../../../AuthContext.js";
+import React, { useContext } from "react";
+import AuthContext from "@/controllers/AuthContext";
 import save from "../functions/save";
 import classes from "./ConfirmationPopUp.module.css";
-const ConfirmationPopUp = (props) => {
+
+interface IProps {
+  selectedSlot: string;
+  writing: string;
+  toggler: (arg0 : boolean) => void;
+  saveWindowToggler: (arg0: boolean) => void;
+}
+
+
+const ConfirmationPopUp = (props: IProps) => {
   const loginToken = useContext(AuthContext).loginToken.get;
   const selectedSlot = props.selectedSlot;
   const writing = props.writing;
   const setReplaceTry = props.toggler;
   const setDisplaySaveWindow = props.saveWindowToggler;
 
-  const handleConfirm = (e) => {
-    e.target.disabled = true;
-    save(loginToken, selectedSlot, writing)
+  const handleConfirm = (e : React.MouseEvent<HTMLButtonElement>) => {
+    (e.target as HTMLButtonElement).disabled = true;
+    save(loginToken as string, selectedSlot, writing)
     .catch((err) => console.log(err))
     .finally(() => setDisplaySaveWindow(false));
   };

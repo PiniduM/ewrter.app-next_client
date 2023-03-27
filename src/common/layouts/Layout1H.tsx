@@ -5,7 +5,7 @@ interface IProps {
     children: React.ReactNode
 }
 
-const EWriterBasicLayout = (props: IProps) => {
+const Layout1H = (props: IProps) => {
     return (
         <>
         <Header />
@@ -14,4 +14,4 @@ const EWriterBasicLayout = (props: IProps) => {
     )
 }
 
-export default EWriterBasicLayout;
+export default Layout1H;
