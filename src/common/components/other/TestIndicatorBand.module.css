@@ -1,0 +1,43 @@
+.band {
+  width: 100%;
+  padding: 0.5rem 0rem;
+  background-color: rgb(255, 196, 0);
+  overflow: hidden;
+}
+
+.para {
+  text-align: center;
+  white-space: nowrap;
+  -moz-animation: animation 15s linear infinite;
+  -webkit-animation: animation 15s linear infinite;
+  animation: animation 16s linear infinite;
+}
+
+@-moz-keyframes animation {
+  0% {
+    -moz-transform: translateX(100%);
+  }
+  100% {
+    -moz-transform: translateX(-55rem);
+  }
+}
+@-webkit-keyframes animation {
+  0% {
+    -webkit-transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(-55rem);
+  }
+}
+@keyframes animation {
+  0% {
+    -moz-transform: translateX(100%); /* Firefox bug fix */
+    -webkit-transform: translateX(100%); /* Firefox bug fix */
+    transform: translateX(100%);
+  }
+  100% {
+    -moz-transform: translateX(-55rem); /* Firefox bug fix */
+    -webkit-transform: translateX(-55rem); /* Firefox bug fix */
+    transform: translateX(-55rem);
+  }
+}

@@ -35,7 +35,7 @@ const LoginForm = () => {
     return pwdRegex.test(password);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     (document.activeElement as HTMLElement)?.blur();
     // use above mechanism if validation is done on blur

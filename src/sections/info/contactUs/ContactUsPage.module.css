@@ -1,0 +1,32 @@
+.contact_us_page {
+  padding: 1rem 1rem;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  margin-bottom: 1rem;
+  background-color: #f5f6f8;
+  background-color: #fff5f1;
+  font-family: "Montserrat", sans-serif;
+}
+
+.heading {
+  text-align: center;
+}
+.heading_slogon {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.sub_heading {
+  margin-bottom: 1rem;
+}
+
+.contact_option {
+  margin-bottom: 2rem;
+}
+
+.contact_option_heading {
+  margin-bottom: 0.5rem;
+}
+
+.highlight {
+  color: rgb(82, 79, 213);
+}
