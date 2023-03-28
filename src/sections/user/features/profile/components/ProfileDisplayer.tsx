@@ -1,7 +1,22 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import Image from "next/image";
 import classes from "./ProfileDisplayer.module.css";
 
-const ProfileDisplayer = (props) => {
+import profileIcon from "@/assets/icons/profileIcon.png"
+
+interface IProps {
+  profileData: {
+    username: string
+    fullName: string
+    age: string
+    gender: string
+    country: string
+    occupation: string
+  };
+  setter : (arg0: string) => void
+}
+
+const ProfileDisplayer = (props: IProps) => {
   const profileData = props.profileData;
 
   const setRenderingComponent = props.setter;
@@ -11,7 +26,7 @@ const ProfileDisplayer = (props) => {
 
   return (
     <div className={classes.displayer}>
-      <img src="/assets/profileIcon.png" alt="profile icon" className={classes.profileIcon} />
+      <Image src={profileIcon} alt="profile icon" className={classes.profileIcon} />
       <h1 className={classes.topic}>{profileData.username}</h1>
       <ul className={classes.detailContainer}>
         <li className={classes.detail}>Full Name: {profileData.fullName}</li>
@@ -25,7 +40,7 @@ const ProfileDisplayer = (props) => {
           <button className={`defaultBtn ${classes.logoutBtn}`}>Log out</button>
         </Link> */}
         <button className={`defaultBtn ${classes.editBtn}`} onClick={displayEditor}>Edit</button>
-        <Link to="/">
+        <Link href="/">
           <button className={`defaultBtn ${classes.closeBtn}`}>Close</button>
         </Link>
       </div>

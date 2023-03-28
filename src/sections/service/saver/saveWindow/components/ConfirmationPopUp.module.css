@@ -11,6 +11,7 @@
 .confirmation_window {
   align-self: center;
   padding: 1rem 1rem;
+  margin: 0rem 1rem;
   border-radius: 0.7rem;
   background-color: rgb(255, 255, 255);
 }
@@ -24,4 +25,8 @@
 
 .btn {
   min-height: 2.5rem;
+}
+
+.slot_id {
+  font-weight: bold;
 }

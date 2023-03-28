@@ -28,7 +28,7 @@ const IntroBlock = () => {
           powered by AI
         </p>
         <Link href="/essay_writer/writer">
-          <button className={`defaultBtn ${classes.btn}`}> Let 's go</button>
+          <button className={`defaultBtn ${classes.btn}`}> Let&apos;s go</button>
         </Link>
       </div>
     </div>

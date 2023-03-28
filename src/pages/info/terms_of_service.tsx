@@ -1,23 +1,23 @@
 import Head from "next/head";
 
-import Home from "@/sections/home/Home";
 import Layout1HF from "@/common/layouts/Layout1HF";
+import TermsOfService from "@/sections/info/terms_of_service/TermsOfService";
 
-const HomePage = () => {
+const TermsOfServicePage = () => {
   return (
     <>
       <Head>
-        <title>eWriter | home</title>
+        <title>Terms of service</title>
         <meta
           name="description"
           content="Revolutionize your writing with eWriter's cutting-edge automated writing tools powered by artificial intelligence. Our Essay Writer tool uses AI to generate high-quality essays in minutes. Unlock your full potential and achieve your writing goals with eWriter. Try it now!"
         />
       </Head>
       <Layout1HF>
-        <Home />
+        <TermsOfService />
       </Layout1HF>
     </>
   );
 };
 
-export default HomePage;
+export default TermsOfServicePage;

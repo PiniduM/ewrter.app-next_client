@@ -14,19 +14,26 @@
   margin-bottom: 1rem;
 }
 .topic {
-  background-color: white;
-  text-align: center;
+  width: 100%;
+  border: none;
   padding: 1rem 0rem;
+  font-size: 2rem;
+  text-align: center;
+  background-color: white;
 }
 
 .writingViewer {
+  width: 100%;
+  height: 50vh;
   margin-bottom: 2rem;
-  background-color: rgb(255, 255, 255);
   padding: 0rem 1rem 1rem 2rem;
-  max-height: 80vh;
-  overflow: scroll;
+  border: none;
+  font-size: 1.2rem;
+  font-family: inherit;
+  line-height: 1.8rem;
+  background-color: rgb(255, 255, 255);
 }
-::-webkit-scrollbar {
+.writingViewer ::-webkit-scrollbar {
   display: none;
 }
 

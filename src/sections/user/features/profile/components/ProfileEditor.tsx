@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import Image from "next/image";
 import Select from "react-select";
 
 import {
@@ -6,11 +7,37 @@ import {
   occupationOptions,
   countryOptions,
 } from "../functions/optionLists";
-import FormSubmitLoader from "../../../../../components/Loaders/FormSubmitLoader";
-import classes from "./ProfileEditor.module.css";
+import FormSubmitLoader from "@/common/components/Loaders/FormSubmitLoader";
 import axIService_api from "../../../../service/controllers/axIServerService";
 
-const ProfileEditor = (props) => {
+import profileIcon from "@/assets/icons/profileIcon.png"
+import classes from "./ProfileEditor.module.css";
+
+interface IProfileData{
+  username: string
+  fullName: string
+  age: string
+  gender: string
+  country: string
+  occupation: string
+}
+
+interface IProps {
+  loginToken: string;
+  profileData: IProfileData
+  setter : React.Dispatch<React.SetStateAction<string>>
+  updator: React.Dispatch<React.SetStateAction<IProfileData | undefined>>
+}
+
+interface INewUpdates {
+  fullName?: string
+  age?: string
+  gender?: string
+  country?: string
+  occupation?: string
+}
+
+const ProfileEditor = (props: IProps) => {
   const [displayLoader, setDisplayLoader] = useState(false);
 
   const loginToken = props.loginToken;
@@ -24,8 +51,8 @@ const ProfileEditor = (props) => {
   const currentCountry = profileData.country;
   const currentOccupation = profileData.occupation;
 
-  const newFullNameRef = useRef();
-  const newAgeRef = useRef();
+  const newFullNameRef = useRef<HTMLInputElement>(null);
+  const newAgeRef = useRef<HTMLInputElement>(null);
   const [selectedGender, setSelectedGender] = useState(currentGender);
   const [selectedCountry, setSelectedCountry] = useState(currentCountry);
   const [selectedOccupation, setSelectedOccupation] =
@@ -42,16 +69,16 @@ const ProfileEditor = (props) => {
   const setRenderingComponent = props.setter;
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:React.FormEvent) => {
     e.preventDefault();
-    const submitBtn = document.getElementById("submitBtn");
+    const submitBtn = document.getElementById("submitBtn") as HTMLButtonElement;
     submitBtn.disabled = true;
     setDisplayLoader(true);
 
-    const newUpdates = {};
+    const newUpdates: INewUpdates = {};
 
-    const newFullName = newFullNameRef.current.value;
-    const newAge = newAgeRef.current.value;
+    const newFullName = newFullNameRef.current?.value;
+    const newAge = newAgeRef.current?.value;
 
     if (newFullName !== currentFullName) newUpdates.fullName = newFullName;
     if (newAge !== currentAge) newUpdates.age = newAge;
@@ -81,8 +108,8 @@ const ProfileEditor = (props) => {
 
   return (
     <div className={classes.editor}>
-      <img
-        src="/assets/profileIcon.png"
+      <Image
+        src={profileIcon}
         alt="profile icon"
         className={classes.profileIcon}
       />
@@ -108,8 +135,6 @@ const ProfileEditor = (props) => {
             type="text"
             defaultValue={currentAge}
             placeholder={currentAge}
-            id=""
-            name=""
             required
             ref={newAgeRef}
             className={classes.txtInput}
@@ -121,7 +146,7 @@ const ProfileEditor = (props) => {
             options={genderOptions}
             defaultValue={{ value: currentGender, label: currentGender }}
             menuPlacement="bottom"
-            onChange={(choice) => setSelectedGender(choice.value)}
+            onChange={(choice) => setSelectedGender(choice?.value || "")}
           />
         </div>
         <div className={classes.inputBlock}>
@@ -130,7 +155,7 @@ const ProfileEditor = (props) => {
             options={countryOptions}
             defaultValue={{ value: currentCountry, label: currentCountry }}
             menuPlacement="bottom"
-            onChange={(choice) => setSelectedCountry(choice.value)}
+            onChange={(choice) => setSelectedCountry(choice?.value || "")}
           />
         </div>
         <div className={classes.inputBlock}>
@@ -142,7 +167,7 @@ const ProfileEditor = (props) => {
               label: currentOccupation,
             }}
             menuPlacement="bottom"
-            onChange={(choice) => setSelectedOccupation(choice.value)}
+            onChange={(choice) => setSelectedOccupation(choice?.value || "")}
           />
         </div>
         <div className={classes.actionBtns}>

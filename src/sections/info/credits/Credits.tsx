@@ -1,4 +1,4 @@
-import classes from "./CreditsPage.module.css";
+import classes from "./Credits.module.css";
 
 const CreditsPage = () => {
   return (

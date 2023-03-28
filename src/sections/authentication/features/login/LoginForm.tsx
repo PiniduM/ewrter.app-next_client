@@ -129,9 +129,9 @@ const LoginForm = () => {
             className={classes.submitBtn}
           />
           <p>
-            Don't have an account?{" "}
+            Don&apos;t have an account?
             <Link href="/authentication/register">
-              <span className="underline">Register</span>
+              <span className="underline"> Register</span>
             </Link>
           </p>
         </div>

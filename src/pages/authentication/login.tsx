@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import AuthContext from "@/controllers/AuthContext";
 import LoginForm from "@/sections/authentication/features/login/LoginForm";
@@ -13,9 +14,14 @@ const LoginPage = () => {
   }, [router, loginToken]);
 
   return (
-    <Layout>
-      <LoginForm />
-    </Layout>
+    <>
+      <Head>
+        <title>essay writer | Login</title>
+      </Head>
+      <Layout>
+        <LoginForm />
+      </Layout>
+    </>
   );
 };
 

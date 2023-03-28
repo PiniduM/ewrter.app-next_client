@@ -1,23 +1,29 @@
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import { useState,useContext } from "react";
+import Image from "next/image";
 import Select from "react-select";
 
-import classes from "./ProfileCreator.module.css";
-import { AuthContext } from "../../../../../AuthContext.js";
-
+import AuthContext from "@/controllers/AuthContext";
+import axIService_api from "../../../../service/controllers/axIServerService";
 import {
   countryOptions,
   occupationOptions,
   genderOptions,
 } from "../functions/optionLists";
-import FormSubmitLoader from "../../../../../components/Loaders/FormSubmitLoader";
+import FormSubmitLoader from "@/common/components/Loaders/FormSubmitLoader";
 import Cookies from "js-cookie";
-import axIService_api from "../../../../service/controllers/axIServerService";
+
+import profileIcon from "@/assets/icons/profileIcon.png"
+import classes from "./ProfileCreator.module.css";
+
+interface IProps {
+  currentValue : boolean | string
+}
+
 
 const ProfileCreator = () => {
   const [displayLoader, setDisplayLoader] = useState(false);
-  const navigate = useNavigate();
-
+  const router = useRouter();
   const loginToken = useContext(AuthContext).loginToken.get;
   const setProfileCreated = useContext(AuthContext).profileCreated.set;
 
@@ -34,22 +40,22 @@ const ProfileCreator = () => {
   //   getCountriesOptions().then((options) => setCountriesOptions(options));
   // }, []);
 
-  const SlidesNavBar = (props) => {
+  const SlidesNavBar = (props: IProps) => {
     const handleGoBack = () => {
       setSlideNo((current) => (current > 0 ? current - 1 : current));
     };
     const handleGoForward = () => {
-      if (props.current) {
+      if (props.currentValue) {
         setSlideNo((current) => (current < 6 ? current + 1 : current));
-        document.getElementById("warning").classList.remove(classes.active);
+        document.getElementById("warning")?.classList.remove(classes.active);
       } else {
-        document.getElementById("warning").classList.add(classes.active);
+        document.getElementById("warning")?.classList.add(classes.active);
       }
       console.log(slideNo);
     };
 
     const saveProfileInfo = () => {
-      const submitBtn = document.getElementById("submitBtn");
+      const submitBtn = document.getElementById("submitBtn") as HTMLButtonElement;
       submitBtn.disabled = true;
       setDisplayLoader(true);
       const profileData = {
@@ -70,13 +76,13 @@ const ProfileCreator = () => {
           // only one type of response
           setProfileCreated(true);
           Cookies.set("profile_created","T")
-          navigate("/user/profile");
+          router.push("/user/profile");
         })
         .catch((err) => {
           if (err.response?.data === "already_created") {
-            navigate("/user/profile");
+            router.push("/user/profile");
           } else {
-            navigate("/unexpected_error");
+            router.replace("/unexpected_error");
           }
         })
         .finally(() => {
@@ -93,7 +99,7 @@ const ProfileCreator = () => {
         {slideNo === 0 ? (
           <button
             className={`defaultBtn ${classes.cancel_btn}`}
-            onClick={() => navigate("/")}
+            onClick={() => router.push("/")}
           >
             Cancel
           </button>
@@ -143,7 +149,7 @@ const ProfileCreator = () => {
             {" "}
           </p>
         </div>
-        <SlidesNavBar current={true} />
+        <SlidesNavBar currentValue={true} />
       </>
     );
   };
@@ -164,7 +170,7 @@ const ProfileCreator = () => {
             Please Enter your full name
           </p>
         </div>
-        <SlidesNavBar current={fullName} />
+        <SlidesNavBar currentValue={fullName} />
       </>
     );
   };
@@ -174,9 +180,9 @@ const ProfileCreator = () => {
         <div className={classes.inputBlock}>
           <label className={classes.inputLabel}>Age: </label>
           <input
-            type="text"
+            type="number"
             name="age"
-            maxLength="2"
+            maxLength={2}
             defaultValue={age}
             className={classes.txtInput}
             onBlur={(e) => setAge(e.target.value)}
@@ -185,7 +191,7 @@ const ProfileCreator = () => {
             Please Enter your age
           </p>
         </div>
-        <SlidesNavBar current={age} />
+        <SlidesNavBar currentValue={age} />
       </>
     );
   };
@@ -199,13 +205,13 @@ const ProfileCreator = () => {
             options={genderOptions}
             defaultValue={{ value: gender, label: gender }}
             menuPlacement="bottom"
-            onChange={(choice) => setGender(choice.value)}
+            onChange={(choice) => setGender(choice?.value || "")}
           />
           <p className={classes.warning} id="warning">
             Please select your gender
           </p>
         </div>
-        <SlidesNavBar current={gender} />
+        <SlidesNavBar currentValue={gender} />
       </>
     );
   };
@@ -219,13 +225,13 @@ const ProfileCreator = () => {
             options={countryOptions}
             defaultValue={{ value: country, label: country }}
             menuPlacement="bottom"
-            onChange={(choice) => setCountry(choice.value)}
+            onChange={(choice) => setCountry(choice?.value || "")}
           />
           <p className={classes.warning} id="warning">
             Please select your country
           </p>
         </div>
-        <SlidesNavBar current={country} />
+        <SlidesNavBar currentValue={country} />
       </>
     );
   };
@@ -241,14 +247,14 @@ const ProfileCreator = () => {
             menuPlacement="bottom"
             onChange={(choice) => {
               console.log(occupation);
-              setOccupation(choice.value);
+              setOccupation(choice?.value || "");
             }}
           />
           <p className={classes.warning} id="warning">
             Please select your occupation
           </p>
         </div>
-        <SlidesNavBar current={occupation} />
+        <SlidesNavBar currentValue={occupation} />
       </>
     );
   };
@@ -266,8 +272,8 @@ const ProfileCreator = () => {
             <li>Occupation: {occupation}</li>
           </ul>
         </div>
-        <SlidesNavBar current={true} />
-        {displayLoader && <FormSubmitLoader />}
+        <SlidesNavBar currentValue={true} />
+        {displayLoader && <FormSubmitLoader message="Loading ..."/>}
       </>
     );
   };
@@ -275,9 +281,9 @@ const ProfileCreator = () => {
   return (
     <div className={classes.creator}>
       <div className={classes.heading}>
-        <img
-          src="/resources/eWriterLogo1Black.png"
-          alt="accountIcon"
+        <Image
+          src={profileIcon}
+          alt="profile icon"
           className={classes.profileIcon}
         />
         <h2 className={classes.topic}>Create your profile</h2>

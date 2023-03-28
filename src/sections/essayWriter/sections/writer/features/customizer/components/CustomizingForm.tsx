@@ -22,14 +22,13 @@ interface IReqData {
   topic: string;
   type: string;
   count: string;
-  complexity?: string
-  profileData?: IProfileData
+  complexity?: string;
+  profileData?: IProfileData;
 }
-
 
 const DetailCollectingForm = () => {
   const router = useRouter();
-  const [profileData, setProfileData] = useState< IProfileData | null>(null);
+  const [profileData, setProfileData] = useState<IProfileData | null>(null);
   const loginToken = useContext(AuthContext).loginToken?.get;
   const profileCreated = useContext(AuthContext).profileCreated?.get;
   useEffect(() => {
@@ -42,7 +41,6 @@ const DetailCollectingForm = () => {
     }
   }, [loginToken, profileCreated, setProfileData]);
 
-  const setpendingResult = useContext(WriterContext).pendingResult.set;
   const setResult = useContext(WriterContext).result.set;
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -51,12 +49,12 @@ const DetailCollectingForm = () => {
       topic: { value: string };
       essayType: { value: string };
       wordsCount: { value: string };
-      complexity:{value: string};
+      complexity: { value: string };
     };
     const topic = form.topic.value;
     const type = form.essayType.value;
     const count = form.wordsCount.value;
-    const reqData : IReqData = {
+    const reqData: IReqData = {
       topic,
       type,
       count,
@@ -75,17 +73,19 @@ const DetailCollectingForm = () => {
     axIEssaywriter_api
       .post(path, reqData)
       .then((response) => {
-        const result = { topic, content: response.data};
+        const result = { topic, content: response.data };
         setResult(result);
         const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
         Cookies.set("result", JSON.stringify(result), { expires });
+        localStorage.setItem("result",JSON.stringify(result));
       })
       .catch(() => {
         router.push("/unexpected_error");
       });
 
-    setpendingResult({
+    setResult({
       topic,
+      content: undefined,
     });
   };
 

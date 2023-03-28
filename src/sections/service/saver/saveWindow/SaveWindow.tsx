@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthContext from "@/controllers/AuthContext";
+import { useRouter } from "next/router";
 
-import classes from "./SaveWindow.module.css";
+import axIService_api from "../../controllers/axIServerService";
+import save from "./functions/save";
 import SaveSlotList from "./components/saveSlotsList";
 import ConfirmationPopUp from "./components/ConfirmationPopUp";
 import LoginPopUp from "@/common/components/PopUps/LoginPopUp";
-
 import selectableSlotClasses from "./components/SelectableSlot.module.css";
 import Backdrop from "@/common/components/BackDrops/Backdrop";
-import save from "./functions/save";
-import axIService_api from "../../controllers/axIServerService";
+
+import classes from "./SaveWindow.module.css";
 
 interface IWriting {
   topic: string;
@@ -27,6 +28,9 @@ interface ISelectableSlot {
 }
 
 const SaveWindow = (props: IProps) => {
+
+  const router = useRouter();
+
   const handleSave = (
     e: React.MouseEvent<HTMLButtonElement>,
     slotId: string | undefined,
@@ -44,7 +48,7 @@ const SaveWindow = (props: IProps) => {
     (e.target as HTMLButtonElement).disabled = true;
     save(loginToken as string, slotId, writing)
       .catch((err) => console.log(err))
-      .finally(() => setDisplaySaveWindow(false));
+      .finally(() => router.push("/user/e_drive"));
   };
 
   const cancel = () => {

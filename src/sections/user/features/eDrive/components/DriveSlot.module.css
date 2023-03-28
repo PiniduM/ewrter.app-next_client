@@ -83,7 +83,7 @@
   display: grid;
   padding: 0rem 1rem;
   grid-template-columns: auto 1fr auto;
-  grid-template-areas: "deleteBtn gap downloadBtn";
+  grid-template-areas: "deleteBtn gap editBtn";
 }
 
 /* .btn {
@@ -101,10 +101,14 @@
   /* background-color: #dc1414; */
 }
 
-.downloadBtn {
-  grid-area: downloadBtn;
-  /* background-color: #00d81d; */
+.editBtn {
+  grid-area: editBtn;
 }
+
+/* .downloadBtn {
+  grid-area: downloadBtn;
+   background-color: #00d81d; 
+} */
 
 @media (max-width : 360px) {
     .writing_container {

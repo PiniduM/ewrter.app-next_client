@@ -28,7 +28,7 @@ const EssayTypeInputSub = (props: IProps) => {
     }else if (!profileCreated) {
       return (
         <p className={classes.advice_para}>
-          you haven't created a profile yet. please{" "}
+          you haven&apos;t created a profile yet. please{" "}
           <Link href="/user/create_profile">
             <span className="underline">create a profile</span>
           </Link>{" "}

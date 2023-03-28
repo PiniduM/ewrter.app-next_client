@@ -25,7 +25,7 @@ const Displayer = (props: IProps) => {
   const content = writing.content;
 
   const deleteResult = async () => {
-    Cookies.remove("result", { path: "/" });
+    localStorage.removeItem("result");
     router.push("/");
   };
 
@@ -44,7 +44,13 @@ const Displayer = (props: IProps) => {
             >
               Delete
             </button>
-            <Link href={{ pathname: "service/editor", query: writing }}>
+            <Link
+              href={{
+                pathname: "/service/editor",
+                query: { writing: JSON.stringify(writing) },
+              }}
+              as={"/service/editor"}
+            >
               <button className={`defaultBtn ${classes.editBtn}`}>Edit</button>
             </Link>
             {/*
