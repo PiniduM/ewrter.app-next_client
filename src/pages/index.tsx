@@ -7,10 +7,10 @@ const HomePage = () => {
   return (
     <>
       <Head>
-        <title>eWriter | home</title>
+        <title>ewriter</title>
         <meta
           name="description"
-          content="Revolutionize your writing with eWriter's cutting-edge automated writing tools powered by artificial intelligence. Our Essay Writer tool uses AI to generate high-quality essays in minutes. Unlock your full potential and achieve your writing goals with eWriter. Try it now!"
+          content="Revolutionize your writing with eWriter's AI-powered automated writing tools. Generate high-quality essays on with our free AI writer, essay writer.Achieve your writing goals with eWriter, the ultimate tool for personalized writing. Try it now!"
         />
       </Head>
       <Layout1HF>

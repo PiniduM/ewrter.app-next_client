@@ -23,7 +23,7 @@ const CreateProfilePage = () => {
         <title>essay writer | create profile</title>
         <meta
           name="description"
-          content="Transform your writing process with eWriter's create_profile page. Our AI-powered platform generates high-quality content based on your personalized preferences. Sign up today, create your profile, and experience the power of automated writing tools for yourself."
+          content="Take your writing to the next level with eWriter's AI-powered automated writing tools. Sign up now to create a personalized profile and access custom writing content tailored to your preferences. Experience the power of artificial intelligence in writing and elevate your writing game with eWriter!"
         />
       </Head>
       <Layout2Mh>

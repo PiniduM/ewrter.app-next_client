@@ -10,7 +10,7 @@ const EssayWriterHomePage = () => {
         <title>essay writer | profile</title>
         <meta
           name="description"
-          content="Discover the ultimate tool for personalized writing with eWriter's profile page. Edit and optimize your profile data, and witness how our AI-powered platform uses it to create content that's uniquely yours. Sign up now and take your writing to the next level with eWriter's automated writing tools!"
+          content="Discover the power of personalized writing with eWriter's AI-powered platform. Edit and optimize your profile data to witness how our platform uses it to create content that's uniquely yours. Sign up for eWriter today and elevate your writing game!"
         />
       </Head>
       <Layout>

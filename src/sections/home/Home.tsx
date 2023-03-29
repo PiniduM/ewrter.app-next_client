@@ -15,7 +15,7 @@ const Home: React.FC = () => {
             <br />
             <span className={classes.purpleText}>cutting edge technolgies</span>
           </p>
-          <Image src={manWithALaptopImg} alt="smart man" className={classes.img}/>
+          <Image src={manWithALaptopImg} alt="free ai writer" className={classes.img}/>
         </div>
 
         <div className={classes.writers_links}>
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
               </Link>
             </div>
             <div className={classes.link_img}>
-            <Image src={girlWithBooksImg} alt="smart girl" className={classes.img}/>
+            <Image src={girlWithBooksImg} alt="essay writer" className={classes.img}/>
             </div>
           </div>
         </div>

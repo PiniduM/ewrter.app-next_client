@@ -11,7 +11,7 @@ const EssayWriterHomePage = () => {
         <title>essay writer | writer</title>
         <meta
           name="description"
-          content="Experience the future of academic writing with eWriter - the ultimate AI-powered essay writing tool. Say goodbye to writer's block and hello to high-quality essays on any topic in minutes. Get top grades with our user-friendly, SEO-optimized platform. Try eWriter today and elevate your writing game!"
+          content="Unlock your full potential with eWriter's free AI writer – the ultimate tool for personalized writing. Our AI-powered platform generates high-quality content based on your preferences, helping you achieve your writing goals. Sign up for eWriter today and take your writing to the next level!"
         />
       </Head>
       <Layout>

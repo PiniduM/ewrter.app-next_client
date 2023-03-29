@@ -13,7 +13,7 @@ const IntroBlock = () => {
       <div className={classes.content}>
         <Image
           src={girlWithBooksImg}
-          alt="smart girl"
+          alt="essay writer"
           className={classes.contentImg}
           />
         <h2 className={classes.intro}>
