@@ -1,4 +1,4 @@
-import "@/global.d.ts"
+import "@/global.d"
 
 interface IEvent {
   action: string;
