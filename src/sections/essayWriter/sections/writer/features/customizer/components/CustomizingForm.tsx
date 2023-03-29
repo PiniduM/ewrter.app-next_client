@@ -11,6 +11,7 @@ import WordCountInput from "./inputs/WordsCountInput";
 import EssayTypeInput from "./inputs/EssayTypeInput";
 
 import classes from "./CustomizingForm.module.css";
+import { event } from "@/lib/GAHELPER";
 interface IProfileData {
   fullName: string;
   age: string;
@@ -87,6 +88,12 @@ const DetailCollectingForm = () => {
       topic,
       content: undefined,
     });
+    event({
+      action: "write an essay",
+      params: {
+        topic
+      }
+    })
   };
 
   return (
